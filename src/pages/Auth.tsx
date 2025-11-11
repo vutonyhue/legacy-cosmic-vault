@@ -9,7 +9,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { z } from "zod";
 import { Session } from "@supabase/supabase-js";
-import { FairyScene } from "@/components/FairyScene";
+import { MagicalSparkles } from "@/components/MagicalSparkles";
+import fairy1 from "@/assets/fairy-elegant-1.png";
+import fairy2 from "@/assets/fairy-elegant-2.png";
+import fairy3 from "@/assets/fairy-elegant-3.png";
 
 const authSchema = z.object({
   email: z.string().trim().email({ message: "Email không hợp lệ" }).max(255),
@@ -150,12 +153,15 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-accent/10 p-4 relative overflow-hidden">
+      {/* Magical sparkles background */}
+      <MagicalSparkles />
+      
       {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full animate-particle blur-sm"
+            className="absolute w-1 h-1 bg-primary/30 rounded-full animate-particle blur-sm"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -166,8 +172,41 @@ const Auth = () => {
         ))}
       </div>
 
-      {/* 3D Flying Fairies */}
-      <FairyScene />
+      {/* Elegant Flying Fairies */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[
+          { img: fairy1, left: "5%", top: "15%", delay: 0, duration: 12 },
+          { img: fairy2, left: "80%", top: "25%", delay: 2, duration: 14 },
+          { img: fairy3, left: "15%", top: "65%", delay: 4, duration: 13 },
+        ].map((fairy, i) => (
+          <div
+            key={i}
+            className="absolute animate-fairy-float"
+            style={{
+              left: fairy.left,
+              top: fairy.top,
+              animationDelay: `${fairy.delay}s`,
+              animationDuration: `${fairy.duration}s`,
+            }}
+          >
+            <img
+              src={fairy.img}
+              alt="Elegant Fairy"
+              className="w-32 h-48 md:w-40 md:h-60 object-contain opacity-90"
+              style={{
+                filter: "drop-shadow(0 0 20px rgba(34, 197, 94, 0.6)) drop-shadow(0 0 40px rgba(251, 191, 36, 0.4))",
+              }}
+            />
+            {/* Magical trail */}
+            <div 
+              className="absolute inset-0 animate-pulse"
+              style={{
+                background: "radial-gradient(ellipse at center, rgba(34, 197, 94, 0.3) 0%, transparent 70%)",
+              }}
+            />
+          </div>
+        ))}
+      </div>
 
       <Card className="w-full max-w-md backdrop-blur-xl bg-background/80 border-primary/20 shadow-2xl hover-lift animate-fade-in relative overflow-hidden">
         {/* 3D shine effect overlay */}
