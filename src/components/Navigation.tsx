@@ -9,6 +9,7 @@ const Navigation = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
+    { name: "Feed", path: "/feed" },
     { name: "Profile", path: "/profile" },
     { name: "Marketplace", path: "/marketplace" },
     { name: "Citizenship", path: "/citizenship" },
