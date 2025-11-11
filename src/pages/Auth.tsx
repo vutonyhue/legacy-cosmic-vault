@@ -148,25 +148,65 @@ const Auth = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/95 to-primary/5 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">Chào mừng</CardTitle>
-          <CardDescription className="text-center">
-            Đăng nhập hoặc tạo tài khoản mới
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-accent/10 p-4 relative overflow-hidden">
+      {/* Animated background particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-primary/20 rounded-full animate-particle blur-sm"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 10}s`,
+              animationDuration: `${10 + Math.random() * 15}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      <Card className="w-full max-w-md backdrop-blur-xl bg-background/80 border-primary/20 shadow-2xl hover-lift animate-fade-in relative overflow-hidden">
+        {/* 3D shine effect overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+        
+        {/* Glow effect */}
+        <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-xl opacity-50 animate-pulse" />
+        
+        <div className="relative">
+          <CardHeader className="text-center space-y-2 pb-8">
+            <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4 shadow-lg animate-glow">
+              <div className="w-16 h-16 rounded-full bg-background/90 flex items-center justify-center">
+                <span className="text-3xl">🚀</span>
+              </div>
+            </div>
+            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-fade-in">
+              Chào mừng
+            </CardTitle>
+            <CardDescription className="text-center text-base">
+              Đăng nhập hoặc tạo tài khoản mới
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
           <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Đăng nhập</TabsTrigger>
-              <TabsTrigger value="signup">Đăng ký</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 bg-muted/50 p-1 backdrop-blur-sm">
+              <TabsTrigger 
+                value="signin" 
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all duration-300"
+              >
+                Đăng nhập
+              </TabsTrigger>
+              <TabsTrigger 
+                value="signup"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-accent data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all duration-300"
+              >
+                Đăng ký
+              </TabsTrigger>
             </TabsList>
             
-            <TabsContent value="signin">
-              <form onSubmit={handleSignIn} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="signin-email">Email</Label>
+            <TabsContent value="signin" className="mt-6">
+              <form onSubmit={handleSignIn} className="space-y-5">
+                <div className="space-y-2 group">
+                  <Label htmlFor="signin-email" className="text-sm font-medium">Email</Label>
                   <Input
                     id="signin-email"
                     name="signin-email"
@@ -174,28 +214,34 @@ const Auth = () => {
                     placeholder="your@email.com"
                     required
                     disabled={isLoading}
+                    className="bg-background/50 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 hover:border-primary/40"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="signin-password">Mật khẩu</Label>
+                <div className="space-y-2 group">
+                  <Label htmlFor="signin-password" className="text-sm font-medium">Mật khẩu</Label>
                   <Input
                     id="signin-password"
                     name="signin-password"
                     type="password"
                     required
                     disabled={isLoading}
+                    className="bg-background/50 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 hover:border-primary/40"
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-semibold" 
+                  disabled={isLoading}
+                >
                   {isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
                 </Button>
               </form>
             </TabsContent>
             
-            <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="signup-displayName">Tên hiển thị</Label>
+            <TabsContent value="signup" className="mt-6">
+              <form onSubmit={handleSignUp} className="space-y-5">
+                <div className="space-y-2 group">
+                  <Label htmlFor="signup-displayName" className="text-sm font-medium">Tên hiển thị</Label>
                   <Input
                     id="signup-displayName"
                     name="signup-displayName"
@@ -203,10 +249,11 @@ const Auth = () => {
                     placeholder="Tên của bạn"
                     required
                     disabled={isLoading}
+                    className="bg-background/50 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 hover:border-primary/40"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                <div className="space-y-2 group">
+                  <Label htmlFor="signup-email" className="text-sm font-medium">Email</Label>
                   <Input
                     id="signup-email"
                     name="signup-email"
@@ -214,10 +261,11 @@ const Auth = () => {
                     placeholder="your@email.com"
                     required
                     disabled={isLoading}
+                    className="bg-background/50 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 hover:border-primary/40"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="signup-password">Mật khẩu</Label>
+                <div className="space-y-2 group">
+                  <Label htmlFor="signup-password" className="text-sm font-medium">Mật khẩu</Label>
                   <Input
                     id="signup-password"
                     name="signup-password"
@@ -225,15 +273,21 @@ const Auth = () => {
                     placeholder="Ít nhất 6 ký tự"
                     required
                     disabled={isLoading}
+                    className="bg-background/50 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 hover:border-primary/40"
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-semibold" 
+                  disabled={isLoading}
+                >
                   {isLoading ? "Đang đăng ký..." : "Đăng ký"}
                 </Button>
               </form>
             </TabsContent>
           </Tabs>
-        </CardContent>
+          </CardContent>
+        </div>
       </Card>
     </div>
   );
