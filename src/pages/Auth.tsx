@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { z } from "zod";
 import { Session } from "@supabase/supabase-js";
-import fairyImage from "@/assets/fairy.png";
+import { FairyScene } from "@/components/FairyScene";
 
 const authSchema = z.object({
   email: z.string().trim().email({ message: "Email không hợp lệ" }).max(255),
@@ -166,24 +166,8 @@ const Auth = () => {
         ))}
       </div>
 
-      {/* Flying Fairies */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[0, 1, 2].map((i) => (
-          <img
-            key={`fairy-${i}`}
-            src={fairyImage}
-            alt="Flying Fairy"
-            className="absolute w-20 h-20 animate-fairy opacity-80"
-            style={{
-              left: `${20 + i * 30}%`,
-              top: `${30 + i * 10}%`,
-              animationDelay: `${i * 2}s`,
-              animationDuration: `${8 + i * 2}s`,
-              filter: "drop-shadow(0 0 10px rgba(34, 197, 94, 0.6))",
-            }}
-          />
-        ))}
-      </div>
+      {/* 3D Flying Fairies */}
+      <FairyScene />
 
       <Card className="w-full max-w-md backdrop-blur-xl bg-background/80 border-primary/20 shadow-2xl hover-lift animate-fade-in relative overflow-hidden">
         {/* 3D shine effect overlay */}
